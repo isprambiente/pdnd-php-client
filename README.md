@@ -14,24 +14,30 @@ MIT
 
 ## Installazione
 
-1. Installa le dipendenze:
+1. Installa la libreria via composer:
    ```bash
-   composer install
+   composer require isprambiente/pdnd-client
    ```
 
 2. Configura il file JSON con i parametri richiesti (esempio in `configs/progetto.json`):
 
    ```json
-   {
-     "uat": {
-       "kid": "TUO_KID",
-       "issuer": "TUO_ISSUER",
-       "clientId": "TUO_CLIENT_ID",
-       "purposeId": "TUO_PURPOSE_ID",
-       "privKeyPath": "/percorso/chiave_privata.pem",
-       "url": "https://api.pdnd.example.it/resource"
-     }
-   }
+  {
+    "collaudo": {
+      "kid": "kid",
+      "issuer": "issuer",
+      "clientId": "clientId",
+      "purposeId": "purposeId",
+      "privKeyPath": "/tmp/key.priv"
+    },
+    "produzione": {
+      "kid": "kid",
+      "issuer": "issuer",
+      "clientId": "clientId",
+      "purposeId": "purposeId",
+      "privKeyPath": "/tmp/key.priv"
+    }
+  }
    ```
 
 ## Utilizzo da CLI
@@ -49,6 +55,9 @@ php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --statu
 - `--debug` : Abilita output dettagliato
 - `--api-url` : URL dell’API da chiamare dopo la generazione del token
 - `--status-url` : URL dell’API di status per verificare la validità del token
+- `--json`: Stampa le risposte delle API in formato JSON
+- `--save`: Salva il token fino alla scadenza su file per evitare di richiederlo nuovamente
+- `--help`: Mostra questa schermata di aiuto
 
 ### Esempi
 
@@ -116,6 +125,19 @@ Se un parametro non è presente nel file di configurazione, puoi definirlo come 
 
 ```json
 {
+  "produzione": {
+    "kid": "kid",
+    "issuer": "issuer",
+    "clientId": "clientId",
+    "purposeId": "purposeId",
+    "privKeyPath": "/tmp/key.pem"
+  }
+}
+```
+## Esempio di configurazione per collaudo e prosuzione
+
+```json
+{
   "collaudo": {
     "kid": "kid",
     "issuer": "issuer",
@@ -132,7 +154,6 @@ Se un parametro non è presente nel file di configurazione, puoi definirlo come 
   }
 }
 ```
-
 ---
 
 Per domande o suggerimenti, apri una issue!
