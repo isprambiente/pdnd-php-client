@@ -19,7 +19,7 @@ MIT
    composer install
    ```
 
-2. Configura il file JSON con i parametri richiesti (esempio in `configs/uat.json`):
+2. Configura il file JSON con i parametri richiesti (esempio in `configs/progetto.json`):
 
    ```json
    {
@@ -39,13 +39,13 @@ MIT
 Esegui il client dalla cartella principale:
 
 ```bash
-php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --status-url="https://api.pdnd.example.it/status" -c uat
+php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --status-url="https://api.pdnd.example.it/status" -c /percorso/assoluto/progetto.json
 ```
 
 ### Opzioni disponibili
 
 - `-e` : Ambiente da usare (default: produzione)
-- `-c` : **Percorso completo del file di configurazione** (es: `-c /percorso/assoluto/config.json`)
+- `-c` : **Percorso completo del file di configurazione** (es: `-c /percorso/assoluto/progetto.json`)
 - `--debug` : Abilita output dettagliato
 - `--api-url` : URL dell’API da chiamare dopo la generazione del token
 - `--status-url` : URL dell’API di status per verificare la validità del token
@@ -54,12 +54,12 @@ php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --statu
 
 **Chiamata API generica:**
 ```bash
-php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" -c /percorso/assoluto/config.json
+php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" -c /percorso/assoluto/progetto.json
 ```
 
 **Verifica validità token:**
 ```bash
-php bin/pdnd-client.php --status-url="https://api.pdnd.example.it/status" -c /percorso/assoluto/config.json
+php bin/pdnd-client.php --status-url="https://api.pdnd.example.it/status" -c /percorso/assoluto/progetto.json
 ```
 
 **Debug attivo:**
