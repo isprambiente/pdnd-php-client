@@ -21,6 +21,10 @@ class PdndClient
   public function __construct()
   {
     $this->tokenFile = sys_get_temp_dir() . "/pdnd_token_" . $this->purposeId . ".json";
+    if ($this->env === "collaudo") {
+      $this->endpoint = "https://auth.uat.interop.pagopa.it/token.oauth2";
+      $this->aud = "auth.uat.interop.pagopa.it/client-assertion";
+    }
   }
 
   public function setDebug(bool $debug) { $this->debug = $debug; }
@@ -101,10 +105,6 @@ class PdndClient
     $privKeyPath = $this->getPrivKeyPath();
     $endpoint = $this->getEndpoint();
     $aud = $this->getAud();
-    if ($this->env === "collaudo") {
-      $endpoint = "https://auth.uat.interop.pagopa.it/token.oauth2";
-      $aud = "auth.uat.interop.pagopa.it/client-assertion";
-    }
     $subject = $issuer;
 
     $rsaKey = file_get_contents($privKeyPath);
