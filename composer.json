@@ -1,6 +1,6 @@
 {
     "name": "isprambiente/pdnd-client",
-    "description": "Client PHP per estrazione token PDND",
+    "description": "Client PHP per autenticazione e chiamata API PDND (Piattaforma Digitale Nazionale Dati).",
     "type": "library",
     "require": {
         "firebase/php-jwt": "^6.11"

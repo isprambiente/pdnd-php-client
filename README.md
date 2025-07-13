@@ -1,4 +1,4 @@
-# pdnd-client
+# pdnd-php-client
 
 Client PHP per autenticazione e chiamata API PDND (Piattaforma Digitale Nazionale Dati).
 
