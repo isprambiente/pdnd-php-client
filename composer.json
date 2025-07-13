@@ -2,23 +2,29 @@
     "name": "isprambiente/pdnd-client",
     "description": "Client PHP per autenticazione e chiamata API PDND (Piattaforma Digitale Nazionale Dati).",
     "type": "library",
+    "keywords": ["pdnd","php","client","api","authentication"],
+    "homepage": "https://github.com/isprambiente/pdnd-php-client",
+    "license": "MIT",
+    "version": "0.0.1",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Francesco Loreti",
+            "email": "francesco.loreti@isprambiente.it",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "firebase/php-jwt": "^6.11"
     },
-    "license": "MIT",
+    "require-dev": {
+        "phpunit/phpunit": "^12.2"
+    },
     "autoload": {
         "psr-4": {
             "Pdnd\\Client\\": "src/"
         }
     },
-    "authors": [
-        {
-            "name": "Francesco Loreti",
-            "email": "francesco.loreti@isprambiente.it"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require-dev": {
-        "phpunit/phpunit": "^12.2"
-    }
+
+
 }
