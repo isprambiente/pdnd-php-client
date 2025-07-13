@@ -5,7 +5,6 @@
     "keywords": ["pdnd","php","client","api","authentication"],
     "homepage": "https://github.com/isprambiente/pdnd-php-client",
     "license": "MIT",
-    "version": "0.0.1",
     "minimum-stability": "stable",
     "authors": [
         {
@@ -24,7 +23,5 @@
         "psr-4": {
             "Pdnd\\Client\\": "src/"
         }
-    },
-
-
+    }
 }
