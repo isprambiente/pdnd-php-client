@@ -20,23 +20,23 @@ MIT
    ```
 
 2. Configura il file JSON con i parametri richiesti (esempio in `configs/progetto.json`):
-  ```json
-  {
-    "collaudo": {
-      "kid": "kid",
-      "issuer": "issuer",
-      "clientId": "clientId",
-      "purposeId": "purposeId",
-      "privKeyPath": "/tmp/key.priv"
-    },
-    "produzione": {
-      "kid": "kid",
-      "issuer": "issuer",
-      "clientId": "clientId",
-      "purposeId": "purposeId",
-      "privKeyPath": "/tmp/key.priv"
+   ```json
+    {
+      "collaudo": {
+        "kid": "kid",
+        "issuer": "issuer",
+        "clientId": "clientId",
+        "purposeId": "purposeId",
+        "privKeyPath": "/tmp/key.priv"
+      },
+      "produzione": {
+        "kid": "kid",
+        "issuer": "issuer",
+        "clientId": "clientId",
+        "purposeId": "purposeId",
+        "privKeyPath": "/tmp/key.priv"
+      }
     }
-  }
    ```
 
 ## Utilizzo da CLI
