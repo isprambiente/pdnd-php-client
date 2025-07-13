@@ -1,0 +1,24 @@
+{
+    "name": "isprambiente/pdnd-client",
+    "description": "Client PHP per estrazione token PDND",
+    "type": "library",
+    "require": {
+        "firebase/php-jwt": "^6.11"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Pdnd\\Client\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Francesco Loreti",
+            "email": "francesco.loreti@isprambiente.it"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "phpunit/phpunit": "^12.2"
+    }
+}

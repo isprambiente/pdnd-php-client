@@ -1,0 +1,7 @@
+# This is a comment in the .gitignore file
+# Ignore node_modules directory
+
+configs
+vendor
+.env
+keys
