@@ -20,7 +20,6 @@ MIT
    ```
 
 2. Configura il file JSON con i parametri richiesti (esempio in `configs/progetto.json`):
-
    ```json
   {
     "collaudo": {
