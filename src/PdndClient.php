@@ -203,6 +203,11 @@ class PdndClient
     }
   }
 
+  public function refreshToken()
+  {
+    return $this->requestToken(); // Richiama la funzione per ottenere un nuovo token
+  }
+
   // Chiamata generica API con Bearer token
   public function getApi(string $token, $verifySSL = true)
   {
