@@ -12,6 +12,8 @@ class PdndClient
   private $privKeyPath;
   private $debug = false;
   private $url;
+  private $apiUrl = null;
+  private $statusUrl = null;
   private $tokenExp = null;
   private $env = "produzione";
   private $endpoint = "https://auth.interop.pagopa.it/token.oauth2";
@@ -21,10 +23,6 @@ class PdndClient
   public function __construct()
   {
     $this->tokenFile = sys_get_temp_dir() . "/pdnd_token_" . $this->purposeId . ".json";
-    if ($this->env === "collaudo") {
-      $this->endpoint = "https://auth.uat.interop.pagopa.it/token.oauth2";
-      $this->aud = "auth.uat.interop.pagopa.it/client-assertion";
-    }
   }
 
   public function setDebug(bool $debug) { $this->debug = $debug; }
@@ -33,8 +31,16 @@ class PdndClient
   public function setClientId(string $clientId) { $this->clientId = $clientId; }
   public function setPurposeId(string $purposeId) { $this->purposeId = $purposeId; }
   public function setPrivKeyPath(string $privKeyPath) { $this->privKeyPath = $privKeyPath; }
-  public function setUrl(string $url) { $this->url = $url; }
-  public function setEnv(string $env) { $this->env = $env; }
+  public function setApiUrl(string $apiUrl) { $this->apiUrl = $apiUrl; }
+  public function setStatusUrl(string $statusUrl) { $this->statusUrl = $statusUrl; }
+
+  public function setEnv(string $env = "produzione") {
+    $this->env = $env;
+    if ($env === "collaudo") {
+      $this->endpoint = "https://auth.uat.interop.pagopa.it/token.oauth2";
+      $this->aud = "auth.uat.interop.pagopa.it/client-assertion";
+    }
+  }
   public function setEndpoint(string $endpoint) { $this->endpoint = $endpoint; }
   public function setAud(string $aud) { $this->aud = $aud; }
 
@@ -43,10 +49,11 @@ class PdndClient
   public function getClientId() { return $this->clientId ?? $this->prompt("clientId", "Inserisci il clientId"); }
   public function getPurposeId() { return $this->purposeId ?? $this->prompt("purposeId", "Inserisci il purposeId"); }
   public function getPrivKeyPath() { return $this->privKeyPath ?? $this->prompt("privKeyPath", "Inserisci il path della chiave privata"); }
-  public function getUrl() { return $this->url ?? $this->prompt("url", "Inserisci la URL dell'API PDND"); }
   public function getEnv() { return $this->env ?? $this->prompt("env", "Inserisci l'enviroment dell'API PDND"); }
   public function getEndpoint() { return $this->endpoint ?? $this->prompt("endpoint", "Inserisci l'endpoint dell'API PDND"); }
   public function getAud() { return $this->aud ?? $this->prompt("aud", "Inserisci l'aud dell'API PDND"); }
+  public function getApiUrl() { return $this->apiUrl ?? $this->prompt("apiUrl", "Inserisci l'url dell'API che vuoi richiamare dall'API PDND"); }
+  public function getStatusUrl() { return $this->statusUrl ?? $this->prompt("statusUrl", "Inserisci l'url dell'API per lo status"); }
 
   private function validateConfig()
   {
@@ -77,9 +84,9 @@ class PdndClient
     $this->clientId = $config['clientId'] ?? getenv('PDND_CLIENT_ID');
     $this->purposeId = $config['purposeId'] ?? getenv('PDND_PURPOSE_ID');
     $this->privKeyPath = $config['privKeyPath'] ?? getenv('PDND_PRIVKEY_PATH');
-    $this->url = $config['url'] ?? getenv('PDND_URL');
-    $this->url = $config['env'] ?? getenv('PDND_ENV');
 
+    $this->validateUrl($this->apiUrl);
+    $this->validateUrl($this->statusUrl);
     $this->validateConfig();
   }
 
@@ -94,6 +101,23 @@ class PdndClient
       throw new PdndException("Errore: il campo '$key' è obbligatorio.");
     }
     return $line;
+  }
+
+  public function validateUrl($url) {
+    if (empty($url)) return false;
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_NOBODY, true); // Evita di scaricare il contenuto
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // Timeout di 10 secondi
+    curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode < 200 || $httpCode >= 400) {
+      throw new PdndException("Errore: URL non raggiungibile o non valida.", 1002);
+    }
+    return true;
   }
 
   public function requestToken()
@@ -180,9 +204,9 @@ class PdndClient
   }
 
   // Chiamata generica API con Bearer token
-  public function getApi(string $token, string $apiUrl = null, $verifySSL = true)
+  public function getApi(string $token, $verifySSL = true)
   {
-    $url = $apiUrl ?? $this->getUrl();
+    $url = $this->apiUrl ?? $this->getApiUrl();
     $ch = curl_init($url);
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -203,34 +227,35 @@ class PdndClient
   }
 
   // Verifica validità token su API di status
-  public function getStatus(string $token, string $statusUrl, $verifySSL = true)
+  public function getStatus(string $token, $verifySSL = true)
   {
-      $ch = curl_init($statusUrl);
+    $statusUrl = $this->statusUrl ?? $this->getStatusUrl();
+    $ch = curl_init($statusUrl);
 
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($ch, CURLOPT_HTTPHEADER, [
-          "Authorization: Bearer $token",
-          "Accept: */*"
-      ]);
-      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $verifySSL);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Authorization: Bearer $token",
+        "Accept: */*"
+    ]);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $verifySSL);
 
-      $response = curl_exec($ch);
-      $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-      curl_close($ch);
+    $response = curl_exec($ch);
+    $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
 
-      if ($statusCode >= 200 && $statusCode < 300) {
-          $json = json_decode($response, true);
-          if (json_last_error() === JSON_ERROR_NONE && isset($json['status'])) {
-              if ($this->debug) echo "\n✅ Token valido. Stato: {$json['status']}\n";
-              return $json;
-          } else {
-              if ($this->debug) echo "\n⚠️ Risposta JSON non valida o chiave 'status' mancante.\n";
-              throw new PdndException("⚠️ Risposta JSON non valida o chiave 'status' mancante.");
-          }
-      } else {
-          if ($this->debug) echo "\n❌ Errore nella chiamata. Codice: $statusCode\nRisposta: $response\n";
-          throw new PdndException("❌ Errore nella chiamata. Codice: $statusCode\nRisposta: $response\n");
-      }
+    if ($statusCode >= 200 && $statusCode < 300) {
+        $json = json_decode($response, true);
+        if (json_last_error() === JSON_ERROR_NONE && isset($json['status'])) {
+            if ($this->debug) echo "\n✅ Token valido. Stato: {$json['status']}\n";
+            return $json;
+        } else {
+            if ($this->debug) echo "\n⚠️ Risposta JSON non valida o chiave 'status' mancante.\n";
+            throw new PdndException("⚠️ Risposta JSON non valida o chiave 'status' mancante.");
+        }
+    } else {
+        if ($this->debug) echo "\n❌ Errore nella chiamata. Codice: $statusCode\nRisposta: $response\n";
+        throw new PdndException("❌ Errore nella chiamata. Codice: $statusCode\nRisposta: $response\n");
+    }
   }
 
   public function isTokenValid(): bool
