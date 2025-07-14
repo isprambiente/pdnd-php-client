@@ -4,9 +4,9 @@ require __DIR__ . '/../src/PdndClient.php';
 require __DIR__ . '/../src/PdndException.php';
 
 // --- Lettura argomenti da riga di comando ---
-$options = getopt("e:c:", ["debug", "api-url:", "status-url:", "help", "json", "save"]);
-$env = $options["e"] ?? "produzione";
-$configPath = $options["c"] ?? null;
+$options = getopt("e:c:", ["env:", "config:", "debug", "api-url:", "status-url:", "help", "json", "save"]);
+$env = $options["e"] ?? $options["env"] ?? "produzione";
+$configPath = $options["c"] ?? $options["config"] ?? null;
 $debug = isset($options["debug"]);
 $apiUrl = $options["api-url"] ?? null;
 $statusUrl = $options["status-url"] ?? null;
@@ -21,13 +21,14 @@ Utilizzo:
   php bin/pdnd-client.php -c /percorso/config.json [opzioni]
 
 Opzioni:
-  -e                Ambiente da usare (default: produzione)
-  -c                Percorso completo del file di configurazione
+  -e, --env         Specifica l'ambiente da usare (es. collaudo, produzione)
+                    Default: produzione
+  -c, --config      Specifica il percorso completo del file di configurazione
   --debug           Abilita output dettagliato
   --api-url         URL dell’API da chiamare dopo la generazione del token
   --status-url      URL dell’API di status per verificare la validità del token
   --json            Stampa le risposte delle API in formato JSON
-  --save            Salva il token fino alla scadenza su file per evitare di richiederlo nuovamente
+  --save            Salva il token per evitare di richiederlo a ogni chiamata
   --help            Mostra questa schermata di aiuto
 
 Esempi:

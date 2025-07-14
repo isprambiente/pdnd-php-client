@@ -49,13 +49,13 @@ php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --statu
 
 ### Opzioni disponibili
 
-- `-e` : Ambiente da usare (default: produzione)
-- `-c` : **Percorso completo del file di configurazione** (es: `-c /percorso/assoluto/progetto.json`)
+- `-e`, `--env` : Specifica l'ambiente da usare (es. collaudo, produzione). Default: `produzione`
+- `-c`, `--config` : Specifica il percorso completo del file di configurazione (es: `-c /percorso/assoluto/progetto.json`)
 - `--debug` : Abilita output dettagliato
 - `--api-url` : URL dell’API da chiamare dopo la generazione del token
 - `--status-url` : URL dell’API di status per verificare la validità del token
 - `--json`: Stampa le risposte delle API in formato JSON
-- `--save`: Salva il token fino alla scadenza su file per evitare di richiederlo nuovamente
+- `--save`: Salva il token per evitare di richiederlo a ogni chiamata
 - `--help`: Mostra questa schermata di aiuto
 
 ### Esempi
@@ -89,13 +89,14 @@ Utilizzo:
   php bin/pdnd-client.php -c /percorso/config.json [opzioni]
 
 Opzioni:
-  -e                Ambiente da usare (default: produzione)
-  -c                Percorso completo del file di configurazione
+  -e, --env         Specifica l'ambiente da usare (es. collaudo, produzione)
+                    Default: produzione
+  -c, --config      Specifica il percorso completo del file di configurazione
   --debug           Abilita output dettagliato
   --api-url         URL dell’API da chiamare dopo la generazione del token
   --status-url      URL dell’API di status per verificare la validità del token
   --json            Stampa le risposte delle API in formato JSON
-  --save            Salva il token fino alla scadenza su file per evitare di richiederlo nuovamente
+  --save            Salva il token per evitare di richiederlo a ogni chiamata
   --help            Mostra questa schermata di aiuto
 
 Esempi:
