@@ -38,19 +38,60 @@ MIT
       }
     }
    ```
+## Istruzioni
+
+```php
+// Istanzia la classe PdndClient
+$client = new PdndClient();
+// Definisci se vuoi vedere il debug
+// Funzione opzionale. Default: false
+$client->setDebug(true);
+// Definisci se ti trovi in collaudo o produzione
+// Funzione opzionale. Default: produzione
+$client->setEnv("collaudo");
+// Definisci il file di configurazione come indicato sopra.
+// Se non indicato, è necessario indicare manualmente i vari parametri di configurazione
+$client->config("/percorso//assoluto/sample.json");
+// Richiedi il token alla PDND
+$token = $client->requestToken();
+// Imposta l'url dell'API su PDND
+$client->setApiUrl("https://api.pdnd.it/tuo/indirizzo/della/api");
+// Richiama l'API
+$result = $client->getApi($token);
+// Visualizza il risultato
+echo $result['body'];
+```
+### Fulzioni aggiuntive
+
+**Salva il token**
+
+La funzione `$client->saveToken($token);` consente di memorizzare il token e non doverlo richiedere a ogni chiamata.
+
+**Carica il token salvato**
+
+La funzione `$client->loadToken();` consente di richiamare il token precedentemente salvato.
+
+**Valida il token**
+
+La funzione `$client->isTokenValid();` verifica la validità del token.
+
+**Refresh token**
+
+La funzione `$client->refreshToken();` effettua una nuova richiesta di token.
+E' un alias di `$client->requestToken();`
 
 ## Utilizzo da CLI
 
 Esegui il client dalla cartella principale:
 
 ```bash
-php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --status-url="https://api.pdnd.example.it/status" -c /percorso/assoluto/progetto.json
+php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --config /percorso/assoluto/progetto.json
 ```
 
 ### Opzioni disponibili
 
 - `-e`, `--env` : Specifica l'ambiente da usare (es. collaudo, produzione). Default: `produzione`
-- `-c`, `--config` : Specifica il percorso completo del file di configurazione (es: `-c /percorso/assoluto/progetto.json`)
+- `-c`, `--config` : Specifica il percorso completo del file di configurazione (es: `--config /percorso/assoluto/progetto.json`)
 - `--debug` : Abilita output dettagliato
 - `--api-url` : URL dell’API da chiamare dopo la generazione del token
 - `--status-url` : URL dell’API di status per verificare la validità del token
@@ -62,12 +103,12 @@ php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --statu
 
 **Chiamata API generica:**
 ```bash
-php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" -c /percorso/assoluto/progetto.json
+php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --config /percorso/assoluto/progetto.json
 ```
 
 **Verifica validità token:**
 ```bash
-php bin/pdnd-client.php --status-url="https://api.pdnd.example.it/status" -c /percorso/assoluto/progetto.json
+php bin/pdnd-client.php --status-url="https://api.pdnd.example.it/status" --config /percorso/assoluto/progetto.json
 ```
 
 **Debug attivo:**
@@ -100,8 +141,8 @@ Opzioni:
   --help            Mostra questa schermata di aiuto
 
 Esempi:
-  php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" -c /percorso/config.json
-  php bin/pdnd-client.php --status-url="https://api.pdnd.example.it/status" -c /percorso/config.json
+  php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --config /percorso/config.json
+  php bin/pdnd-client.php --status-url="https://api.pdnd.example.it/status" --config /percorso/config.json
   php bin/pdnd-client.php --debug --api-url="https://api.pdnd.example.it/resource"
 ```
 
