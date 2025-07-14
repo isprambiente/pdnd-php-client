@@ -1,8 +1,5 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../src/PdndClient.php';
-require __DIR__ . '/../src/PdndException.php'; // Import the custom exception class
-
 use Pdnd\Client\PdndClient;
 use Pdnd\Client\PdndException;
 
