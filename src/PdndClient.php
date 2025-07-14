@@ -23,11 +23,6 @@ class PdndClient
   private $tokenFile = "";
   private $sslValidation = true; // Default verifica SSL abilitata
 
-  public function __construct()
-  {
-    $this->tokenFile = sys_get_temp_dir() . "/pdnd_token_" . $this->purposeId . ".json";
-  }
-
   public function setDebug(bool $debug) { $this->debug = $debug; }
   public function setKid(string $kid) { $this->kid = $kid; }
   public function setIssuer(string $issuer) { $this->issuer = $issuer; }
@@ -88,6 +83,7 @@ class PdndClient
     $this->clientId = $config['clientId'] ?? getenv('PDND_CLIENT_ID');
     $this->purposeId = $config['purposeId'] ?? getenv('PDND_PURPOSE_ID');
     $this->privKeyPath = $config['privKeyPath'] ?? getenv('PDND_PRIVKEY_PATH');
+    $this->tokenFile = sys_get_temp_dir() . "/pdnd_token_" . $this->purposeId . ".json";
 
     $this->validateUrl($this->apiUrl);
     $this->validateUrl($this->statusUrl);
