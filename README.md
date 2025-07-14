@@ -8,7 +8,7 @@ MIT
 
 ## Requisiti
 
-- PHP >= 8.1 (versioni precedenti fino alla 7.4 funzionano ma sono [EOL](https://endoflife.date/php))
+- PHP >= 8.1 (versioni precedenti sono [EOL](https://endoflife.date/php))
 - Composer
 - Estensione cURL abilitata
 
