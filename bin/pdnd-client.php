@@ -1,7 +1,10 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../src/PdndClient.php';
-require __DIR__ . '/../src/PdndException.php';
+require __DIR__ . '/../src/PdndException.php'; // Import the custom exception class
+
+use Pdnd\Client\PdndClient;
+use Pdnd\Client\PdndException;
 
 // --- Lettura argomenti da riga di comando ---
 $options = getopt("e:c:", ["env:", "config:", "debug", "api-url:", "status-url:", "help", "json", "save"]);
