@@ -69,6 +69,7 @@ echo $result['body'] . "\n";
 **Disabilita verifica certificato SSL**
 
 La funzione `$client->sslValidation(false);` Disabilita verifica SSL per ambiente impostato (es. collaudo).
+Default: true
 
 **Salva il token**
 
@@ -78,9 +79,9 @@ La funzione `$client->saveToken($token);` consente di memorizzare il token e non
 
 La funzione `$client->loadToken();` consente di richiamare il token precedentemente salvato.
 
-**Valida il token**
+**Valida il token salvato**
 
-La funzione `$client->isTokenValid();` verifica la validità del token.
+La funzione `$client->isTokenValid();` verifica la validità del token salvato.
 
 **Refresh token**
 
