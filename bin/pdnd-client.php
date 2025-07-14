@@ -66,6 +66,7 @@ try {
     if ($save) $client->saveToken($token);
     if ($statusUrl) {
       try {
+        $client->setStatusUrl($statusUrl);
         $status = $client->getStatus($token, $statusUrl, $verifySSL);
         if ($debug) echo "\n✅ Response status:\n";
         echo json_encode($status, JSON_PRETTY_PRINT) . "\n";
@@ -77,6 +78,7 @@ try {
       }
     }
     if ($apiUrl) {
+      $client->setApiUrl($apiUrl);
       $result = $client->getApi($token, $apiUrl, $verifySSL);
       $body = $result['body'];
       if ($debug) {
@@ -88,6 +90,8 @@ try {
         $body = json_encode($decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
       }
       echo $body . "\n";
+    } else {
+      echo "$token\n";
     }
     exit(0);
   } else {
