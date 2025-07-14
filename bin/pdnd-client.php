@@ -68,7 +68,7 @@ try {
     if ($statusUrl) {
       try {
         $client->setStatusUrl($statusUrl);
-        $status = $client->getStatus($token, $statusUrl, $verifySSL);
+        $status = $client->getStatus($token, $verifySSL);
         if ($debug) echo "\n✅ Response status:\n";
         echo json_encode($status, JSON_PRETTY_PRINT) . "\n";
       } catch (PdndException $e) {
@@ -80,7 +80,7 @@ try {
     }
     if ($apiUrl) {
       $client->setApiUrl($apiUrl);
-      $result = $client->getApi($token, $apiUrl, $verifySSL);
+      $result = $client->getApi($token, $verifySSL);
       $body = $result['body'];
       if ($debug) {
         $decoded = json_decode($body, true);
