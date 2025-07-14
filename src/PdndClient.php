@@ -21,6 +21,7 @@ class PdndClient
   private $endpoint = "https://auth.interop.pagopa.it/token.oauth2";
   private $aud = "auth.interop.pagopa.it/client-assertion";
   private $tokenFile = "";
+  private $sslValidation = true; // Default verifica SSL abilitata
 
   public function __construct()
   {
@@ -35,6 +36,7 @@ class PdndClient
   public function setPrivKeyPath(string $privKeyPath) { $this->privKeyPath = $privKeyPath; }
   public function setApiUrl(string $apiUrl) { $this->apiUrl = $apiUrl; }
   public function setStatusUrl(string $statusUrl) { $this->statusUrl = $statusUrl; }
+  public function sslValidation(string $sslValidation) { $this->sslValidation = $sslValidation; }
 
   public function setEnv(string $env = "produzione") {
     $this->env = $env;
@@ -211,7 +213,7 @@ class PdndClient
   }
 
   // Chiamata generica API con Bearer token
-  public function getApi(string $token, $verifySSL = true)
+  public function getApi(string $token)
   {
     $url = $this->apiUrl ?? $this->getApiUrl();
     $ch = curl_init($url);
@@ -221,12 +223,18 @@ class PdndClient
         "Authorization: Bearer $token",
         "Accept: */*"
     ]);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $verifySSL);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->sslValidation);
 
     $response = curl_exec($ch);
     $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
-
+    if (!$response) {
+      throw new PdndException("❌ Errore nella chiamata API: " . curl_error($ch));
+    }
+    if ($this->debug) {
+      $decoded = json_decode($response, true);
+      $response = json_encode($decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
     return [
       'status' => $statusCode,
       'body' => $response
@@ -234,7 +242,7 @@ class PdndClient
   }
 
   // Verifica validità token su API di status
-  public function getStatus(string $token, $verifySSL = true)
+  public function getStatus(string $token)
   {
     $statusUrl = $this->statusUrl ?? $this->getStatusUrl();
     $ch = curl_init($statusUrl);
@@ -244,7 +252,7 @@ class PdndClient
         "Authorization: Bearer $token",
         "Accept: */*"
     ]);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $verifySSL);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->sslValidation);
 
     $response = curl_exec($ch);
     $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);

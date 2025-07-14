@@ -56,7 +56,7 @@ $client->setEnv("collaudo");
 // Se non indicato, è necessario indicare manualmente i vari parametri di configurazione
 $client->config("/percorso/sample.json");
 // Imposta l'url dell'API su PDND
-$client->setApiUrl("https://api.pdnd.it/tuo/indirizzo/della/api");
+$client->setApiUrl("https://www.tuogateway.example.it/indirizzo/della/api");
 // Richiedi il token alla PDND
 $token = $client->requestToken();
 // Richiama l'API
@@ -65,6 +65,10 @@ $result = $client->getApi($token);
 echo $result['body'] . "\n";
 ```
 ### Fulzioni aggiuntive
+
+**Disabilita verifica certificato SSL**
+
+La funzione `$client->sslValidation(false);` Disabilita verifica SSL per ambiente impostato (es. collaudo).
 
 **Salva il token**
 
