@@ -1,7 +1,8 @@
 <?php
 // filepath: src/PdndClient.php
 namespace Pdnd\Client;
-
+use Pdnd\Client\PdndException;
+use Exception;
 use Firebase\JWT\JWT;
 
 class PdndClient
