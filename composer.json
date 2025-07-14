@@ -18,10 +18,5 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^12.2"
-    },
-    "autoload": {
-        "psr-4": {
-            "Pdnd\\Client\\": "src/"
-        }
     }
 }
