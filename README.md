@@ -41,6 +41,9 @@ MIT
 ## Istruzioni
 
 ```php
+require_once __DIR__ . '/vendor/autoload.php';
+use Pdnd\Client\PdndClient;
+
 // Istanzia la classe PdndClient
 $client = new PdndClient();
 // Definisci se vuoi vedere il debug
@@ -51,15 +54,15 @@ $client->setDebug(true);
 $client->setEnv("collaudo");
 // Definisci il file di configurazione come indicato sopra.
 // Se non indicato, è necessario indicare manualmente i vari parametri di configurazione
-$client->config("/percorso//assoluto/sample.json");
-// Richiedi il token alla PDND
-$token = $client->requestToken();
+$client->config("/percorso/sample.json");
 // Imposta l'url dell'API su PDND
 $client->setApiUrl("https://api.pdnd.it/tuo/indirizzo/della/api");
+// Richiedi il token alla PDND
+$token = $client->requestToken();
 // Richiama l'API
 $result = $client->getApi($token);
 // Visualizza il risultato
-echo $result['body'];
+echo $result['body'] . "\n";
 ```
 ### Fulzioni aggiuntive
 
@@ -155,7 +158,6 @@ Se un parametro non è presente nel file di configurazione, puoi definirlo come 
 - `PDND_CLIENT_ID`
 - `PDND_PURPOSE_ID`
 - `PDND_PRIVKEY_PATH`
-- `PDND_URL`
 
 ## Note
 
