@@ -1,5 +1,6 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
+// filepath: src/PdndClient.php
+namespace Pdnd\Client;
 
 use Firebase\JWT\JWT;
 

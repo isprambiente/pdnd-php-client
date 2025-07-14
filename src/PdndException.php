@@ -1,5 +1,8 @@
 <?php
 // filepath: src/PdndException.php
+namespace Pdnd\Client;
+
+use Exception;
 
 class PdndException extends Exception
 {
