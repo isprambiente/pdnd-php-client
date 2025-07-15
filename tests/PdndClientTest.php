@@ -11,8 +11,6 @@
  */
 
 namespace Pdnd;
-use Pdnd\PdndClient;
-use Pdnd\PdndException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
