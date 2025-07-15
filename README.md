@@ -117,6 +117,7 @@ php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --confi
 - `--status-url` : URL dell’API di status per verificare la validità del token
 - `--json`: Stampa le risposte delle API in formato JSON
 - `--save`: Salva il token per evitare di richiederlo a ogni chiamata
+- `--no-verify-ssl`: Disabilita la verifica SSL (utile per ambienti di collaudo)
 - `--help`: Mostra questa schermata di aiuto
 
 ### Esempi
@@ -158,6 +159,7 @@ Opzioni:
   --status-url      URL dell’API di status per verificare la validità del token
   --json            Stampa le risposte delle API in formato JSON
   --save            Salva il token per evitare di richiederlo a ogni chiamata
+  --no-verify-ssl   Disabilita la verifica SSL (utile per ambienti di collaudo)
   --help            Mostra questa schermata di aiuto
 
 Esempi:
