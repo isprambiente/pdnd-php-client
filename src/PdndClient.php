@@ -348,7 +348,7 @@ class PdndClient
    * @return bool True se l'URL è valido, altrimenti lancia un'eccezione.
    * @throws PdndException Se l'URL non è raggiungibile o non valido.
    */
-  public function validateUrl(string $url) {
+  public function validateUrl($url) {
     if (empty($url)) return false;
 
     $ch = curl_init($url);
