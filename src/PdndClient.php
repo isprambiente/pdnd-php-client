@@ -58,6 +58,7 @@ class PdndClient
   private $tokenFile = "";
   private $verifySSL = true; // Default verifica SSL abilitata
   private $dateTimeZone = 'Europe/Rome'; // Default timezone
+  private $filters = []; // Array per i filtri personalizzati
 
   // -- Setters --
   public function setApiUrl(string $apiUrl) { $this->apiUrl = $apiUrl; }
@@ -79,6 +80,7 @@ class PdndClient
       $this->aud = "auth.uat.interop.pagopa.it/client-assertion";
     }
   }
+  public function setFilters(array $filters) { $this->filters = $filters; }
   public function setKid(string $kid) { $this->kid = $kid; }
   public function setIssuer(string $issuer) { $this->issuer = $issuer; }
   public function setPurposeId(string $purposeId) { $this->purposeId = $purposeId; }
@@ -92,6 +94,7 @@ class PdndClient
   public function getClientId() { return $this->clientId ?? $this->prompt("clientId", "Inserisci il clientId"); }
   public function getEndpoint() { return $this->endpoint ?? $this->prompt("endpoint", "Inserisci l'endpoint dell'API PDND"); }
   public function getEnv() { return $this->env ?? $this->prompt("env", "Inserisci l'enviroment dell'API PDND"); }
+  public function getFilters() { return $this->filters; }
   public function getKid() { return $this->kid ?? $this->prompt("kid", "Inserisci il kid"); }
   public function getIssuer() { return $this->issuer ?? $this->prompt("issuer", "Inserisci l'issuer"); }
   public function getPurposeId() { return $this->purposeId ?? $this->prompt("purposeId", "Inserisci il purposeId"); }
@@ -139,6 +142,10 @@ class PdndClient
   public function getApi(string $token)
   {
     $url = $this->apiUrl ?? $this->getApiUrl();
+    if ($this->filters) {
+      $query = http_build_query($this->filters);
+      $url .= (strpos($url, '?') === false ? '?' : '&') . $query;
+    }
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

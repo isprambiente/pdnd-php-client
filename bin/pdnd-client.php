@@ -4,11 +4,12 @@ use Pdnd\Client\PdndClient;
 use Pdnd\Client\PdndException;
 
 // --- Lettura argomenti da riga di comando ---
-$options = getopt("e:c:", ["env:", "config:", "debug", "api-url:", "status-url:", "help", "json", "save", "no-verify-ssl"]);
+$options = getopt("e:c:", ["env:", "config:", "debug", "api-url:", "api-url-filters:", "status-url:", "help", "json", "save", "no-verify-ssl"]);
 $env = $options["e"] ?? $options["env"] ?? "produzione";
 $configPath = $options["c"] ?? $options["config"] ?? null;
 $debug = isset($options["debug"]);
 $apiUrl = $options["api-url"] ?? null;
+$filters = $options["api-url-filters"] ?? null;
 $statusUrl = $options["status-url"] ?? null;
 $jsonOutput = isset($options["json"]);
 $save = isset($options["save"]);
@@ -26,6 +27,7 @@ Opzioni:
   -c, --config      Specifica il percorso completo del file di configurazione
   --debug           Abilita output dettagliato
   --api-url         URL dell’API da chiamare dopo la generazione del token
+  --api-url-filters Filtri da applicare all'API (es. ?parametro=valore)
   --status-url      URL dell’API di status per verificare la validità del token
   --json            Stampa le risposte delle API in formato JSON
   --save            Salva il token per evitare di richiederlo a ogni chiamata
@@ -82,6 +84,7 @@ try {
     }
     if ($apiUrl) {
       $client->setApiUrl($apiUrl);
+      $client->setFilters($filters ?? []); // Imposta i filtri se presenti
       $result = $client->getApi($token);
       $body = $result['body'];
       if ($debug) {

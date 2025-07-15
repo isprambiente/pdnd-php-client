@@ -114,6 +114,7 @@ php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --confi
 - `-c`, `--config` : Specifica il percorso completo del file di configurazione (es: `--config /percorso/assoluto/progetto.json`)
 - `--debug` : Abilita output dettagliato
 - `--api-url` : URL dell’API da chiamare dopo la generazione del token
+- `--api-url-filters` : Filtri da applicare all'API (es. ?parametro=valore)
 - `--status-url` : URL dell’API di status per verificare la validità del token
 - `--json`: Stampa le risposte delle API in formato JSON
 - `--save`: Salva il token per evitare di richiederlo a ogni chiamata
@@ -156,6 +157,7 @@ Opzioni:
   -c, --config      Specifica il percorso completo del file di configurazione
   --debug           Abilita output dettagliato
   --api-url         URL dell’API da chiamare dopo la generazione del token
+  --api-url-filters Filtri da applicare all'API (es. ?parametro=valore)
   --status-url      URL dell’API di status per verificare la validità del token
   --json            Stampa le risposte delle API in formato JSON
   --save            Salva il token per evitare di richiederlo a ogni chiamata
