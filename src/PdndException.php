@@ -1,7 +1,16 @@
 <?php
-// filepath: src/PdndException.php
-namespace Pdnd\Client;
+/**
+ * @package Pdnd\Client
+ * @name PdndException
+ * @license MIT
+ * @file PdndException.php
+ * @brief Custom exception class per la gestione degli errori in the PDND client.
+ * @author Francesco Loreti
+ * @mailto francesco.loreti@isprambiente.it
+ * @first_release 2025-07-13
+ */
 
+namespace Pdnd\Client;
 use Exception;
 
 class PdndException extends Exception

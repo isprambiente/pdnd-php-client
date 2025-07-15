@@ -44,6 +44,7 @@ EOT;
 $client = new PdndClient();
 $client->setDebug($debug);
 $client->setEnv($env);
+$client->setVerifySSL($env == 'produzione'); // Disabilita verifica SSL per ambiente di collaudo
 
 // --- Caricamento configurazione se presente ---
 if ($configPath) {
@@ -68,7 +69,7 @@ try {
     if ($statusUrl) {
       try {
         $client->setStatusUrl($statusUrl);
-        $status = $client->getStatus($token, $verifySSL);
+        $status = $client->getStatus($token);
         if ($debug) echo "\n✅ Response status:\n";
         echo json_encode($status, JSON_PRETTY_PRINT) . "\n";
       } catch (PdndException $e) {

@@ -1,12 +1,29 @@
 <?php
+/**
+ * @package Pdnd\Client
+ * @name PdndClientTest
+ * @license MIT
+ * @file PdndClientTest.php
+ * @brief Test suite for the PDND client.
+ * @author Francesco Loreti
+ * @mailto francesco.loreti@isprambiente.it
+ * @first_release 2025-07-13
+ */
 
+namespace Pdnd\Client;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
-require_once __DIR__ . '/../src/PdndClient.php';
-require_once __DIR__ . '/../src/PdndException.php';
-
+/**
+ * Suite di test per il client PDND.
+ * Questa classe contiene test per la configurazione, la validazione del token e la validazione degli URL.
+ */
 class PdndClientTest extends TestCase
 {
+  /**
+   * Test per la configurazione con un file mancante.
+   * Si aspetta che venga lanciata un'eccezione PdndException.
+   */
   public function testConfigMissingFile()
   {
     $client = new PdndClient();
@@ -14,14 +31,10 @@ class PdndClientTest extends TestCase
     $client->config('/path/invalido/config.json');
   }
 
-  public function testValidateConfigThrowsException()
-  {
-    $client = new PdndClient();
-    // Non settiamo nessun parametro, deve lanciare PdndException
-    $this->expectException(PdndException::class);
-    $client->config(null);
-  }
-
+  /**
+   * Test per la configurazione con un file JSON valido.
+   * Si aspetta che i parametri vengano impostati correttamente.
+   */
   public function testConfigValidFile()
   {
     $client = new PdndClient();
@@ -33,6 +46,38 @@ class PdndClientTest extends TestCase
     $this->assertEmpty($client->getKid());
   }
 
+  /**
+   * Test per la validazione del token.
+   * Si aspetta che venga lanciata un'eccezione PdndException se il token non è valido.
+   */
+  public function testIsTokenValidFalse()
+  {
+    $client = new PdndClient();
+    $reflection = new ReflectionClass($client);
+    $prop = $reflection->getProperty('tokenExp');
+    $prop->setAccessible(true);
+    $prop->setValue($client, time() - 100); // scaduto
+    $this->assertFalse($client->isTokenValid());
+  }
+
+  /**
+   * Test per la validazione del token.
+   * Si aspetta che ritorni true se il token è valido.
+   */
+  public function testIsTokenValidTrue()
+  {
+    $client = new PdndClient();
+    $reflection = new ReflectionClass($client);
+    $prop = $reflection->getProperty('tokenExp');
+    $prop->setAccessible(true);
+    $prop->setValue($client, time() + 100); // valido
+    $this->assertTrue($client->isTokenValid());
+  }
+
+  /**
+   * Test per la configurazione con un file JSON valido.
+   * Si aspetta che i parametri vengano impostati correttamente.
+   */
   public function testSetAndGet()
   {
     $client = new PdndClient();
@@ -48,26 +93,22 @@ class PdndClientTest extends TestCase
     $this->assertEquals('/tmp/key.pem', $client->getPrivKeyPath());
   }
 
-  public function testIsTokenValidFalse()
+  /**
+   * Test per la configurazione con un file JSON non valido.
+   * Si aspetta che venga lanciata un'eccezione PdndException.
+   */
+  public function testValidateConfigThrowsException()
   {
     $client = new PdndClient();
-    $reflection = new ReflectionClass($client);
-    $prop = $reflection->getProperty('tokenExp');
-    $prop->setAccessible(true);
-    $prop->setValue($client, time() - 100); // scaduto
-    $this->assertFalse($client->isTokenValid());
+    // Non settiamo nessun parametro, deve lanciare PdndException
+    $this->expectException(PdndException::class);
+    $client->config(null);
   }
 
-  public function testIsTokenValidTrue()
-  {
-    $client = new PdndClient();
-    $reflection = new ReflectionClass($client);
-    $prop = $reflection->getProperty('tokenExp');
-    $prop->setAccessible(true);
-    $prop->setValue($client, time() + 100); // valido
-    $this->assertTrue($client->isTokenValid());
-  }
-
+  /**
+   * Test per la validazione degli URL.
+   * Si aspetta che venga lanciata un'eccezione PdndException se l'URL non è valido.
+   */
   public function testValidateUrlThrowsException()
   {
     $client = new PdndClient();
@@ -78,6 +119,10 @@ class PdndClientTest extends TestCase
     $client->validateUrl($client->getApiUrl());
   }
 
+  /**
+   * Test per la validazione degli URL.
+   * Si aspetta che ritorni true se l'URL è valido.
+   */
   public function testValidateUrlTrue()
   {
     $client = new PdndClient();
