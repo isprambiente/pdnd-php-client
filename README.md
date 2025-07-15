@@ -57,6 +57,12 @@ $client->setEnv("collaudo");
 $client->config("/percorso/sample.json");
 // Imposta l'url dell'API su PDND
 $client->setApiUrl("https://www.tuogateway.example.it/indirizzo/della/api");
+// Imposta i filtri per la richiesta API
+// Esempio: se vuoi filtrare per id, puoi farlo in questo modo
+// Se non indicato, il filtro sarà vuoto e l'API restituirà tutti i risultati
+$client->setFilters([
+    'id' => '1234'
+]);
 // Disabilita verifica SSL per ambiente di collaudo
 $client->setVerifySSL(false);
 // Verifica se il token salvato è valido

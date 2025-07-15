@@ -40,6 +40,7 @@ class PdndClient
    * @var string $tokenFile Il percorso del file in cui salvare il token.
    * @var bool $sslValidation Abilita o disabilita la verifica SSL (default: true).
    * @var string $dateTimeZone Il fuso orario da utilizzare per le date (default: 'Europe/Rome').
+   * @var array $filters Array per i filtri personalizzati da applicare alle chiamate API.
    */
 
   private $kid;
