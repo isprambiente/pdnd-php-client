@@ -321,7 +321,8 @@ class PdndClient
         }
         if ($this->debug) {
           if (isset($this->tokenExp)) {
-            $dt = new DateTime($this->tokenExp, new DateTimeZone($this->dateTimeZone));
+            $dt = new DateTime("@$this->tokenExp", new DateTimeZone($this->dateTimeZone));
+            $dt->setTimezone(new DateTimeZone($this->dateTimeZone)); // Apply your desired timezone
             $tokenExp = $dt->format('Y-m-d H:i:s');
           } else {
             $tokenExp = 'non disponibile';
