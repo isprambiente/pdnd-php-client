@@ -13,6 +13,8 @@
 namespace Pdnd\Client;
 use Pdnd\Client\PdndException;
 use Exception;
+use DateTime;
+use DateTimeZone;
 use Firebase\JWT\JWT;
 
 /**
@@ -316,8 +318,14 @@ class PdndClient
           $this->tokenExp = $payload['exp'] ?? null;
         }
         if ($this->debug) {
+          if (isset($this->tokenExp)) {
+            $dt = new DateTime("@$this->tokenExp", new DateTimeZone('Europe/Rome'));
+            $tokenExp = $dt->format('Y-m-d H:i:s');
+          } else {
+            $tokenExp = 'non disponibile';
+          }
           echo "\n🔐 Access Token:\n$accessToken\n";
-          echo "\n⏰ Scadenza token (exp): " . ($this->tokenExp ? date('Y-m-d H:i:s', $this->tokenExp) : 'non disponibile') . "\n";
+          echo "\n⏰ Scadenza token (exp): " . $tokenExp . "\n";
         }
         return $accessToken;
       } else {
