@@ -4,7 +4,7 @@ use Pdnd\Client\PdndClient;
 use Pdnd\Client\PdndException;
 
 // --- Lettura argomenti da riga di comando ---
-$options = getopt("e:c:", ["env:", "config:", "debug", "api-url:", "status-url:", "help", "json", "save"]);
+$options = getopt("e:c:", ["env:", "config:", "debug", "api-url:", "status-url:", "help", "json", "save", "no-verify-ssl"]);
 $env = $options["e"] ?? $options["env"] ?? "produzione";
 $configPath = $options["c"] ?? $options["config"] ?? null;
 $debug = isset($options["debug"]);
@@ -12,7 +12,7 @@ $apiUrl = $options["api-url"] ?? null;
 $statusUrl = $options["status-url"] ?? null;
 $jsonOutput = isset($options["json"]);
 $save = isset($options["save"]);
-$verifySSL = ($env == 'produzione'); // Disabilita verifica SSL per ambiente di collaudo
+$verifySSL = !isset($options["no-verify-ssl"]); // Disabilita verifica SSL per ambiente di collaudo
 
 // --- Controllo configurazione ---
 if (isset($options['help']) || $argc === 1) {
@@ -29,6 +29,7 @@ Opzioni:
   --status-url      URL dell’API di status per verificare la validità del token
   --json            Stampa le risposte delle API in formato JSON
   --save            Salva il token per evitare di richiederlo a ogni chiamata
+  --no-verify-ssl   Disabilita la verifica SSL (utile per ambienti di collaudo)
   --help            Mostra questa schermata di aiuto
 
 Esempi:
@@ -44,7 +45,7 @@ EOT;
 $client = new PdndClient();
 $client->setDebug($debug);
 $client->setEnv($env);
-$client->setVerifySSL($env == 'produzione'); // Disabilita verifica SSL per ambiente di collaudo
+$client->setVerifySSL($verifySSL); // Disabilita verifica SSL per ambiente di collaudo
 
 // --- Caricamento configurazione se presente ---
 if ($configPath) {
@@ -81,7 +82,7 @@ try {
     }
     if ($apiUrl) {
       $client->setApiUrl($apiUrl);
-      $result = $client->getApi($token, $verifySSL);
+      $result = $client->getApi($token);
       $body = $result['body'];
       if ($debug) {
         $decoded = json_decode($body, true);
