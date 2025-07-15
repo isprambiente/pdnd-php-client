@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-use PdndClient;
-use PdndException;
+use Pdnd\PdndClient;
+use Pdnd\PdndException;
 
 // --- Lettura argomenti da riga di comando ---
 $options = getopt("e:c:", ["env:", "config:", "debug", "api-url:", "api-url-filters:", "status-url:", "help", "json", "save", "no-verify-ssl"]);
@@ -9,7 +9,10 @@ $env = $options["e"] ?? $options["env"] ?? "produzione";
 $configPath = $options["c"] ?? $options["config"] ?? null;
 $debug = isset($options["debug"]);
 $apiUrl = $options["api-url"] ?? null;
-$filters = $options["api-url-filters"] ?? null;
+$filters = [];
+if (!empty($options["api-url-filters"]) && is_string($options["api-url-filters"])) {
+    parse_str($options["api-url-filters"], $filters);
+}
 $statusUrl = $options["status-url"] ?? null;
 $jsonOutput = isset($options["json"]);
 $save = isset($options["save"]);

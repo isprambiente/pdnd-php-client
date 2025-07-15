@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Pdnd\Client
+ * @package Pdnd
  * @name PdndClientTest
  * @license MIT
  * @file PdndClientTest.php
@@ -10,6 +10,9 @@
  * @first_release 2025-07-13
  */
 
+namespace Pdnd;
+use Pdnd\PdndClient;
+use Pdnd\PdndException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 

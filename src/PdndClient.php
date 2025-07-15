@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Pdnd\Client
+ * @package Pdnd
  * @name PdndClient
  * @license MIT
  * @file PdndClient.php
@@ -10,7 +10,8 @@
  * @first_release 2025-07-13
  */
 
-use PdndException;
+namespace Pdnd;
+use Pdnd\PdndException;
 use Exception;
 use DateTime;
 use DateTimeZone;

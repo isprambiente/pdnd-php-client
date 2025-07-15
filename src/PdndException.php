@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Pdnd\Client
+ * @package Pdnd
  * @name PdndException
  * @license MIT
  * @file PdndException.php
@@ -10,6 +10,7 @@
  * @first_release 2025-07-13
  */
 
+namespace Pdnd;
 use Exception;
 
 class PdndException extends Exception
