@@ -24,5 +24,8 @@
     "psr-4": {
       "Pdnd\\": "src/"
     }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit --configuration phpunit.xml"
   }
 }
