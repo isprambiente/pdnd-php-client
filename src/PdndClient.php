@@ -10,8 +10,7 @@
  * @first_release 2025-07-13
  */
 
-namespace Pdnd\Client;
-use Pdnd\Client\PdndException;
+use PdndException;
 use Exception;
 use DateTime;
 use DateTimeZone;

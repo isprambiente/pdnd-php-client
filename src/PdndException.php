@@ -10,7 +10,6 @@
  * @first_release 2025-07-13
  */
 
-namespace Pdnd\Client;
 use Exception;
 
 class PdndException extends Exception

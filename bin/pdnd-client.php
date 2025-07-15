@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-use Pdnd\Client\PdndClient;
-use Pdnd\Client\PdndException;
+use PdndClient;
+use PdndException;
 
 // --- Lettura argomenti da riga di comando ---
 $options = getopt("e:c:", ["env:", "config:", "debug", "api-url:", "api-url-filters:", "status-url:", "help", "json", "save", "no-verify-ssl"]);
