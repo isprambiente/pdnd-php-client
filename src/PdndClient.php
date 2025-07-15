@@ -39,6 +39,7 @@ class PdndClient
    * @var string $aud L'audience per il token JWT.
    * @var string $tokenFile Il percorso del file in cui salvare il token.
    * @var bool $sslValidation Abilita o disabilita la verifica SSL (default: true).
+   * @var string $dateTimeZone Il fuso orario da utilizzare per le date (default: 'Europe/Rome').
    */
 
   private $kid;
@@ -56,6 +57,7 @@ class PdndClient
   private $aud = "auth.interop.pagopa.it/client-assertion";
   private $tokenFile = "";
   private $verifySSL = true; // Default verifica SSL abilitata
+  private $dateTimeZone = 'Europe/Rome'; // Default timezone
 
   // -- Setters --
   public function setApiUrl(string $apiUrl) { $this->apiUrl = $apiUrl; }
@@ -319,7 +321,7 @@ class PdndClient
         }
         if ($this->debug) {
           if (isset($this->tokenExp)) {
-            $dt = new DateTime("@$this->tokenExp", new DateTimeZone('Europe/Rome'));
+            $dt = new DateTime(@$this->tokenExp, new DateTimeZone($this->dateTimeZone));
             $tokenExp = $dt->format('Y-m-d H:i:s');
           } else {
             $tokenExp = 'non disponibile';
