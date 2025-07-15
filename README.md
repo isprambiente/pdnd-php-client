@@ -57,8 +57,19 @@ $client->setEnv("collaudo");
 $client->config("/percorso/sample.json");
 // Imposta l'url dell'API su PDND
 $client->setApiUrl("https://www.tuogateway.example.it/indirizzo/della/api");
-// Richiedi il token alla PDND
-$token = $client->requestToken();
+// Disabilita verifica SSL per ambiente di collaudo
+$client->setVerifySSL(false);
+// Verifica se il token salvato è valido
+if ($client->isTokenValid()) {
+  // Se il token è valido, lo carica
+  $client->loadToken($token);
+} else {
+  // Se il token non è valido, richiede un nuovo token
+  $token = $client->requestToken();
+  // Salva il token per usi futuri
+  // Questo passaggio è facoltativo, ma consigliato per evitare richieste multiple di token
+  $client->saveToken($token);
+}
 // Richiama l'API
 $result = $client->getApi($token);
 // Visualizza il risultato
