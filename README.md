@@ -75,6 +75,7 @@ $result = $client->getApi($token);
 // Visualizza il risultato
 echo $result['body'] . "\n";
 ```
+
 ### Fulzioni aggiuntive
 
 **Disabilita verifica certificato SSL**
