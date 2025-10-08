@@ -12,7 +12,7 @@ MIT
 
 ## Requisiti
 
-- PHP >= 8.3 (versioni precedenti sono [EOL](https://endoflife.date/php))
+- PHP >= 8.2 (versioni precedenti sono [EOL](https://endoflife.date/php))
 - Composer
 - Estensione cURL abilitata
 
