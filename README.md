@@ -1,4 +1,5 @@
 # pdnd-php-client
+![Composer Security Audit](https://github.com/isprambiente/pdnd-php-client/actions/workflows/security-audit.yml/badge.svg)
 
 Client PHP per autenticazione e chiamata API PDND (Piattaforma Digitale Nazionale Dati).
 
