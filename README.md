@@ -1,5 +1,8 @@
 # pdnd-php-client
 ![Composer Security Audit](https://github.com/isprambiente/pdnd-php-client/actions/workflows/security-audit.yml/badge.svg)
+![License](https://img.shields.io/github/license/isprambiente/pdnd-php-client)
+![PHP Version](https://img.shields.io/packagist/php-v/isprambiente/pdnd-client)
+![Latest Packagist Version](https://img.shields.io/packagist/v/isprambiente/pdnd-client)
 
 Client PHP per autenticazione e chiamata API PDND (Piattaforma Digitale Nazionale Dati).
 
@@ -9,7 +12,7 @@ MIT
 
 ## Requisiti
 
-- PHP >= 8.1 (versioni precedenti sono [EOL](https://endoflife.date/php))
+- PHP >= 8.3 (versioni precedenti sono [EOL](https://endoflife.date/php))
 - Composer
 - Estensione cURL abilitata
 
