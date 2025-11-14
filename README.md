@@ -123,6 +123,7 @@ php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --confi
 - `-e`, `--env` : Specifica l'ambiente da usare (es. collaudo, produzione). Default: `produzione`
 - `-c`, `--config` : Specifica il percorso completo del file di configurazione (es: `--config /percorso/assoluto/progetto.json`)
 - `--debug` : Abilita output dettagliato
+- `--pretty` : Abilita output dei json formattato per essere maggiormante leggibile
 - `--api-url` : URL dell’API da chiamare dopo la generazione del token
 - `--api-url-filters` : Filtri da applicare all'API (es. ?parametro=valore)
 - `--status-url` : URL dell’API di status per verificare la validità del token
@@ -166,6 +167,7 @@ Opzioni:
                     Default: produzione
   -c, --config      Specifica il percorso completo del file di configurazione
   --debug           Abilita output dettagliato
+  --pretty          Abilita output dei json formattato per essere maggiormante leggibile
   --api-url         URL dell’API da chiamare dopo la generazione del token
   --api-url-filters Filtri da applicare all'API (es. ?parametro=valore)
   --status-url      URL dell’API di status per verificare la validità del token
@@ -178,6 +180,7 @@ Esempi:
   php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" --config /percorso/config.json
   php bin/pdnd-client.php --status-url="https://api.pdnd.example.it/status" --config /percorso/config.json
   php bin/pdnd-client.php --debug --api-url="https://api.pdnd.example.it/resource"
+  php bin/pdnd-client.php --pretty --api-url="https://api.pdnd.example.it/resource"
 ```
 
 ## Variabili di ambiente supportate

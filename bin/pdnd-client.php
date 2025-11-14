@@ -4,10 +4,11 @@ use Pdnd\PdndClient;
 use Pdnd\PdndException;
 
 // --- Lettura argomenti da riga di comando ---
-$options = getopt("e:c:", ["env:", "config:", "debug", "api-url:", "api-url-filters:", "status-url:", "help", "json", "save", "no-verify-ssl"]);
+$options = getopt("e:c:", ["env:", "config:", "debug", "pretty", "api-url:", "api-url-filters:", "status-url:", "help", "json", "save", "no-verify-ssl"]);
 $env = $options["e"] ?? $options["env"] ?? "produzione";
 $configPath = $options["c"] ?? $options["config"] ?? null;
 $debug = isset($options["debug"]);
+$pretty = isset($options["pretty"]);
 $apiUrl = $options["api-url"] ?? null;
 $filters = [];
 if (!empty($options["api-url-filters"]) && is_string($options["api-url-filters"])) {
@@ -29,6 +30,7 @@ Opzioni:
                     Default: produzione
   -c, --config      Specifica il percorso completo del file di configurazione
   --debug           Abilita output dettagliato
+  --pretty          Abilita output dei json formattato per essere maggiormante leggibile
   --api-url         URL dell’API da chiamare dopo la generazione del token
   --api-url-filters Filtri da applicare all'API (es. ?parametro=valore)
   --status-url      URL dell’API di status per verificare la validità del token
@@ -41,6 +43,7 @@ Esempi:
   php bin/pdnd-client.php --api-url="https://api.pdnd.example.it/resource" -c /percorso/config.json
   php bin/pdnd-client.php --status-url="https://api.pdnd.example.it/status" -c /percorso/config.json
   php bin/pdnd-client.php --debug --api-url="https://api.pdnd.example.it/resource"
+  php bin/pdnd-client.php --pretty --api-url="https://api.pdnd.example.it/resource"
 
 EOT;
   exit(0);
@@ -76,8 +79,12 @@ try {
       try {
         $client->setStatusUrl($statusUrl);
         $status = $client->getStatus($token);
-        if ($debug) echo "\n✅ Response status:\n";
-        echo json_encode($status, JSON_PRETTY_PRINT) . "\n";
+        if ($debug || $pretty) {
+          echo "\n✅ Response status:\n";
+          echo json_encode($status, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) . "\n";
+        } else {
+          echo json_encode($status, 0 | JSON_UNESCAPED_UNICODE);
+        }
       } catch (PdndException $e) {
         echo $jsonOutput
             ? json_encode(['error' => $e->getMessage()], JSON_PRETTY_PRINT) . "\n"
@@ -91,11 +98,12 @@ try {
       $result = $client->getApi($token);
       $body = $result['body'];
       if ($debug) {
-        $decoded = json_decode($body, true);
-
         echo "\n🌐 Chiamata API ($apiUrl):\n";
         echo "Status: {$result['status']}\n";
         echo "Body: \n";
+      }
+      if ($debug || $pretty) {
+        $decoded = json_decode($body, true);
         $body = json_encode($decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
       }
       echo $body . "\n";
