@@ -18,7 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        php: [ '8.3', '8.4' ] # Versioni PHP da testare
+        php: [ '8.3', '8.4', '8.5' ] # Versioni PHP da testare
 
     steps:
     - name: Checkout repository
