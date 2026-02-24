@@ -15,7 +15,7 @@
   ],
   "require": {
     "php": ">=8.2",
-    "firebase/php-jwt": "^6.11"
+    "firebase/php-jwt": "^7.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^12.2"
