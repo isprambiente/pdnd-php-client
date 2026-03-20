@@ -107,8 +107,6 @@ try {
         $body = json_encode($decoded, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
       }
       echo $body . "\n";
-    } else {
-      echo "$token\n";
     }
     exit(0);
   } else {
@@ -122,6 +120,3 @@ try {
   echo "Errore generico: " . $e->getMessage() . "\n";
   exit(1);
 }
-
-// Esempio di utilizzo:
-// php bin/pdnd-client.php -c /mnt/c/Users/francesco.loreti/sviluppo/pdnd-client/php/configs/rendis.json --api-url="https://pdnd-test.isprambiente.it/rest/rendis/v1/oas/rendis/api/v1/infoDissesto?id_intervento=001/B2" --status-url="https://pdnd-test.isprambiente.it/rest/rendis/v1/status" --debug -e collaudo
