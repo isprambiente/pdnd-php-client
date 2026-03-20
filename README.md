@@ -12,7 +12,7 @@ MIT
 
 ## Requisiti
 
-- PHP >= 8.2 (versioni precedenti sono [EOL](https://endoflife.date/php))
+- PHP >= 8.3 (versioni precedenti sono [EOL](https://endoflife.date/php))
 - Composer
 - Estensione cURL abilitata
 
@@ -26,6 +26,13 @@ MIT
 2. Configura il file JSON con i parametri richiesti (esempio in `configs/progetto.json`):
    ```json
     {
+      "attestazione": {
+        "kid": "kid",
+        "issuer": "issuer",
+        "clientId": "clientId",
+        "purposeId": "purposeId",
+        "privKeyPath": "/tmp/key.pem"
+      },
       "collaudo": {
         "kid": "kid",
         "issuer": "issuer",
@@ -211,10 +218,17 @@ Se un parametro non è presente nel file di configurazione, puoi definirlo come 
   }
 }
 ```
-## Esempio di configurazione per collaudo e prosuzione
+## Esempio di configurazione per attestazione, collaudo e produzione
 
 ```json
 {
+  "attestazione": {
+    "kid": "kid",
+    "issuer": "issuer",
+    "clientId": "clientId",
+    "purposeId": "purposeId",
+    "privKeyPath": "/tmp/key.pem"
+  },
   "collaudo": {
     "kid": "kid",
     "issuer": "issuer",

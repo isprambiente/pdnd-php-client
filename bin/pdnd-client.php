@@ -26,7 +26,7 @@ Utilizzo:
   php bin/pdnd-client.php -c /percorso/config.json [opzioni]
 
 Opzioni:
-  -e, --env         Specifica l'ambiente da usare (es. collaudo, produzione)
+  -e, --env         Specifica l'ambiente da usare (es. attestazione, collaudo, produzione)
                     Default: produzione
   -c, --config      Specifica il percorso completo del file di configurazione
   --debug           Abilita output dettagliato
@@ -36,7 +36,7 @@ Opzioni:
   --status-url      URL dell’API di status per verificare la validità del token
   --json            Stampa le risposte delle API in formato JSON
   --save            Salva il token per evitare di richiederlo a ogni chiamata
-  --no-verify-ssl   Disabilita la verifica SSL (utile per ambienti di collaudo)
+  --no-verify-ssl   Disabilita la verifica SSL (utile per ambienti di attestazione o collaudo)
   --help            Mostra questa schermata di aiuto
 
 Esempi:
@@ -53,7 +53,7 @@ EOT;
 $client = new PdndClient();
 $client->setDebug($debug);
 $client->setEnv($env);
-$client->setVerifySSL($verifySSL); // Disabilita verifica SSL per ambiente di collaudo
+$client->setVerifySSL($verifySSL); // Disabilita verifica SSL
 
 // --- Caricamento configurazione se presente ---
 if ($configPath) {

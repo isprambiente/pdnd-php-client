@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Pdnd
  * @name PdndClient
@@ -11,6 +12,7 @@
  */
 
 namespace Pdnd;
+
 use Pdnd\PdndException;
 use Exception;
 use DateTime;
@@ -41,7 +43,7 @@ class PdndClient
    * @var bool $sslValidation Abilita o disabilita la verifica SSL (default: true).
    * @var string $dateTimeZone Il fuso orario da utilizzare per le date (default: 'Europe/Rome').
    * @var array $filters Array per i filtri personalizzati da applicare alle chiamate API.
-   */
+  **/
 
   private $kid;
   private $issuer;
@@ -71,14 +73,20 @@ class PdndClient
   /**
    * Imposta l'ambiente dell'API PDND.
    * @param string $env L'ambiente da impostare (default: "produzione").
-   * Se l'ambiente è "collaudo", imposta l'endpoint e l'aud specifici.
+   * Se l'ambiente è "attestazione" o "collaudo", imposta l'endpoint e l'aud specifici.
    * Altrimenti, usa i valori predefiniti per produzione.
   */
   public function setEnv(string $env = "produzione") {
     $this->env = $env;
-    if ($env === "collaudo") {
+    if ($env === "attestazione") {
+      $this->endpoint = "https://auth.att.interop.pagopa.it/token.oauth2";
+      $this->aud = "auth.att.interop.pagopa.it/client-assertion";
+    } elseif ($env === "collaudo") {
       $this->endpoint = "https://auth.uat.interop.pagopa.it/token.oauth2";
       $this->aud = "auth.uat.interop.pagopa.it/client-assertion";
+    } else {
+      $this->endpoint = "https://auth.interop.pagopa.it/token.oauth2";
+      $this->aud = "auth.interop.pagopa.it/client-assertion";
     }
   }
   public function setFilters(array $filters) { $this->filters = $filters; }
