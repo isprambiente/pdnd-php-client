@@ -8,3 +8,4 @@ vendor
 .env
 keys
 .php-cs-fixer.cache
+.phpunit.result.cache
