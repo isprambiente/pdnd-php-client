@@ -185,7 +185,7 @@ class PdndClient
 
     /**
      * Carica la configurazione da un file JSON.
-     * @param string|null $configPath Il percorso del file di configurazione. Se non specificato, usa le variabili di ambiente.
+     * @param string|null $configPath Il percorso del file di configurazione. Default: variabili di ambiente.
      * @throws PdndException Se il file di configurazione non esiste o se l'ambiente non è trovato.
      */
     public function config(string $configPath = null)
@@ -309,7 +309,7 @@ class PdndClient
 
     /**
      * Carica il token da un file.
-     * @param string|null $file Il percorso del file da cui caricare il token. Se non specificato, usa il percorso predefinito.
+     * @param string|null $file Il percorso del file da cui caricare il token. Default: percorso predefinito.
      * @return string|null Il token se caricato con successo, altrimenti null.
      */
     public function loadToken(string $file = null)
@@ -441,7 +441,7 @@ class PdndClient
     /**
      * Salva il token in un file.
      * @param string $token Il token da salvare.
-     * @param string|null $file Il percorso del file in cui salvare il token. Se non specificato, usa il percorso predefinito.
+     * @param string|null $file Il percorso del file in cui salvare il token. Default: percorso predefinito.
      */
     public function saveToken(string $token, string $file = null)
     {
