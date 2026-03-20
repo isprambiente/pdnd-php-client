@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Pdnd
  * @name PdndException
@@ -11,6 +12,7 @@
  */
 
 namespace Pdnd;
+
 use Exception;
 
 class PdndException extends Exception

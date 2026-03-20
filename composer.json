@@ -31,7 +31,7 @@
   "scripts": {
     "test": "vendor/bin/phpunit tests",
     "lint": "vendor/bin/phpcs",
-    "fix": "vendor/bin/php-cs-fixer fix",
+    "fix": "vendor/bin/php-cs-fixer fix --allow-unsupported-php-version=yes",
     "stan": "vendor/bin/phpstan analyse"
   }
 }
