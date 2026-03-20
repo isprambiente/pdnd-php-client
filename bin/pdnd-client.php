@@ -49,11 +49,13 @@ EOT;
   exit(0);
 }
 
-// --- Istanzia la classe PdndClient ---
-$client = new PdndClient();
-$client->setDebug($debug);
-$client->setEnv($env);
-$client->setVerifySSL($verifySSL); // Disabilita verifica SSL
+// --- Istanzia la configurazione e la classe PdndClient ---
+$config = new Pdnd\PdndConfig();
+$config->setDebug($debug);
+$config->setEnv($env);
+$config->setVerifySSL($verifySSL); // Disabilita verifica SSL se richiesto
+
+$client = new Pdnd\PdndClient($config);
 
 // --- Caricamento configurazione se presente ---
 if ($configPath) {

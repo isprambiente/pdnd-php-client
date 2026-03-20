@@ -4,7 +4,7 @@ applicationSuite: PDNDClient
 url: https://github.com/isprambiente/pdnd-php-client.git
 landingURL: https://github.com/isprambiente/pdnd-php-client
 softwareVersion: 0.1.5
-releaseDate: 2026-03-19
+releaseDate: 2026-03-20
 platforms:
   - web
   - windows

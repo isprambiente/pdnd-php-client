@@ -17,15 +17,15 @@ use Exception;
 
 class PdndException extends Exception
 {
-    private $errorCode;
+    private int $errorCode;
 
-    public function __construct($message, $errorCode = 0)
+    public function __construct(string $message, int $errorCode = 0)
     {
         parent::__construct($message, $errorCode);
         $this->errorCode = $errorCode;
     }
 
-    public function getErrorCode()
+    public function getErrorCode(): int
     {
         return $this->errorCode;
     }

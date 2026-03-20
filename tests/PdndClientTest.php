@@ -14,7 +14,6 @@
 namespace Pdnd;
 
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 /**
  * Suite di test per il client PDND.
@@ -55,10 +54,7 @@ class PdndClientTest extends TestCase
     public function testIsTokenValidFalse()
     {
         $client = new PdndClient();
-        $reflection = new ReflectionClass($client);
-        $prop = $reflection->getProperty('tokenExp');
-        $prop->setAccessible(true);
-        $prop->setValue($client, time() - 100); // scaduto
+        $client->getConfig()->tokenExp = time() - 100; // scaduto
         $this->assertFalse($client->isTokenValid());
     }
 
@@ -69,10 +65,7 @@ class PdndClientTest extends TestCase
     public function testIsTokenValidTrue()
     {
         $client = new PdndClient();
-        $reflection = new ReflectionClass($client);
-        $prop = $reflection->getProperty('tokenExp');
-        $prop->setAccessible(true);
-        $prop->setValue($client, time() + 100); // valido
+        $client->getConfig()->tokenExp = time() + 100; // valido
         $this->assertTrue($client->isTokenValid());
     }
 
