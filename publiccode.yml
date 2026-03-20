@@ -29,7 +29,7 @@ description:
     documentation: https://github.com/isprambiente/pdnd-php-client#pdnd-php-client
     apiDocumentation: https://github.com/isprambiente/pdnd-php-client#esempio-di-configurazione-minima
     features:
-      - Compatibile con PHP 8.2 e successivi
+      - Compatibile con PHP 8.4 e successivi
       - Supporta autenticazione OAuth2 con JWT Bearer Token
       - Gestione automatica del rinnovo del token di accesso
       - Facile integrazione con API RESTful di PDND
